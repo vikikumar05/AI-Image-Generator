@@ -11,7 +11,7 @@ const generateImage = async (req, res) => {
 
         const user = await userModel.findById(userId);
         if (!user || !prompt) {
-            return res.json({ success: false, message: "User not found or prompt is missing" });
+            return res.status(400).json({ success: false, message: "User not found or prompt is missing" });
         }
         //https://clipdrop.co/apis/docs/text-to-image
         if (user.creditBalance === 0 || userModel.creditBalance < 0) {
@@ -37,7 +37,8 @@ const generateImage = async (req, res) => {
         // Deduct credit from user
         await userModel.findByIdAndUpdate(user._id, {creditBalance: user.creditBalance - 1});
 
-        res.json({ success: true,
+        res.json({ 
+            success: true,
             image: "Image Generated",
             creditBalance: user.creditBalance - 1,
             resultImage 
@@ -46,7 +47,7 @@ const generateImage = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.json({ success: false, message: error.message });
+        res.status(500).json({ success: false, message: error.message });
 
     }
 }

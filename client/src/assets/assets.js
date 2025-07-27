@@ -1,4 +1,6 @@
 import logo from './logo.svg'
+import logo1 from './logo1.png'
+import logo2 from './logo2.png'
 import logo_icon from './logo_icon.svg'
 import facebook_icon from './facebook_icon.svg'
 import instagram_icon from './instagram_icon.svg'
@@ -21,6 +23,8 @@ import profile_icon from './profile_icon.png'
 
 export const assets = {
     logo,
+    logo1,
+    logo2,
     logo_icon,
     facebook_icon,
     instagram_icon,
