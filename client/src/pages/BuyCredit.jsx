@@ -21,7 +21,18 @@ const BuyCredit = () => {
       order_id: order.id,
       receipt: order.receipt,
       handler: async (response) => {
-        console.log(response);
+        try{
+          const {data} = await axios.post(backendUrl + '/api/user/verify-razor', response, {headers: {token}})
+
+          if(data.success){
+            loadCreditsData()
+            navigate('/')
+            toast.success('Credits Added.')
+          }
+
+        }catch(error){
+          toast.error(error.message)
+        }
       }
     }
     const rzp = new window.Razorpay(options);
@@ -37,6 +48,7 @@ const BuyCredit = () => {
 
       const { data } = await axios.post(backendUrl + '/api/user/pay-razor', { planId }, { headers: { token } });
 
+
       if (data.success) {
         if (!window.Razorpay) {
           toast.error("Razorpay SDK not loaded");
@@ -46,6 +58,7 @@ const BuyCredit = () => {
       }
 
     } catch (error) {
+      console.log(error);
       toast.error(error?.response?.data?.message || error.message);
     }
   }
@@ -66,7 +79,7 @@ const BuyCredit = () => {
             <p className='mt-6'>
               <span className='text-3xl font-medium'> ₹{item.price} </span> / {item.credits} credits</p>
 
-            <button  onClick={() => paymentRazorpay(item.id)} className='w-full bg-gray-800 text-white mt-8 text-sm rounded-md py-2.5 min-w-52'> {user ? 'Purchase' : 'Get Started'}</button>
+            <button onClick={()=> paymentRazorpay(item.id)} className='w-full bg-gray-800 text-white mt-8 text-sm rounded-md py-2.5 min-w-52'>{user ? 'Purchase' : 'Get Started'}</button>
           </div>
         ))}
       </div>

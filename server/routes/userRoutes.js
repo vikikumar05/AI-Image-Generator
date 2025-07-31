@@ -1,4 +1,4 @@
-import {registerUser, loginUser, userCredits, paymentRazorpay} from "../controllers/userController.js";
+import {registerUser, loginUser, userCredits, paymentRazorpay, verifyRazorpay} from "../controllers/userController.js";
 import express from 'express';
 import userAuth from "../middlewares/auth.js";
 
@@ -7,5 +7,6 @@ userRouter.post('/register', registerUser);
 userRouter.post('/login', loginUser);
 userRouter.get('/credits',userAuth, userCredits);
 userRouter.post('/pay-razor',userAuth, paymentRazorpay);
+userRouter.post('/varify-razor', verifyRazorpay);
 
 export default userRouter;
